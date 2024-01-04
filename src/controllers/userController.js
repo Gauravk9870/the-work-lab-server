@@ -112,6 +112,17 @@ const loginUser = asyncHanlder(async (req, res) => {
   }
 })
 
+// Get Freelancers
+const getUsers = asyncHanlder(async (req, res) => {
+  try {
+    const freelancers = await Freelancer.find();
+    res.json(freelancers);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+
+})
+
 module.exports = {
-  registerUser, loginUser
+  registerUser, loginUser, getUsers
 };

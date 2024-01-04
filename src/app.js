@@ -5,7 +5,7 @@ const cors = require("cors");
 const dotenv = require('dotenv').config()
 
 const port = process.env.PORT || 3000;
-const userRoutes = require("./routes/userRoutes");
+const FreelancerRoutes = require("./routes/freelancerRoutes");
 require("./db/conn");
 
 app.use(cors());
@@ -17,7 +17,7 @@ app.get("/", (req, res) => {
   res.json({ message: "HOME" });
 });
 
-app.use("/api/freelancer", userRoutes);
+app.use("/api/freelancer", FreelancerRoutes);
 
 
 app.listen(port, () => {
