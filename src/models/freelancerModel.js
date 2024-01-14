@@ -61,6 +61,10 @@ const freelancerSchema = new mongoose.Schema({
   remoteWorkSuccessKey: { type: String },
   resume: { type: String },
   shortBio: { type: String },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  }
 });
 
 const Freelancer = mongoose.model("Freelancer", freelancerSchema);

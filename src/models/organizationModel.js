@@ -5,6 +5,7 @@ const OrganizationSchema = new mongoose.Schema({
     type: String,
     required: [true, "Company name is required"],
   },
+  password: String,
   tradeName: String,
   GSTIN: String,
   yearOfIncorporation: Number,
@@ -44,7 +45,6 @@ const OrganizationSchema = new mongoose.Schema({
   servicesToExplore: [String],
   termsAndConditionsAgreement: {
     type: Boolean,
-    required: true,
   },
   futureHiringPlans: String,
   softwareUsed: {
@@ -57,8 +57,12 @@ const OrganizationSchema = new mongoose.Schema({
   hasAccountingSoftware: Boolean,
   hasHRManagementSoftware: Boolean,
   hasCRMSoftware: Boolean,
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  }
 });
 
-const Company = mongoose.model("Company", OrganizationSchema);
+const Ogranization = mongoose.model("Organization", OrganizationSchema);
 
-module.exports = Company;
+module.exports = Ogranization;
