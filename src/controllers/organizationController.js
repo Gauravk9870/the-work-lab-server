@@ -38,14 +38,13 @@ const registerOrganization = asyncHanlder(async (req, res) => {
     // Check if organization exists
     const organizationExits = await Organization.findOne({ GSTIN });
     if (organizationExits) {
-        res.status(400);
-        throw new Error('Ogranization aleary exits')
+        return res.status(201).json({ error: "Ogranization with GSTIN aleary exits" });
 
     }
 
     // Create hash password
     const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const hashedPassword = await bcrypt.hash(companyName, salt);
 
     // Create Organization
     const organization = await Organization.create({
@@ -70,15 +69,14 @@ const registerOrganization = asyncHanlder(async (req, res) => {
     })
 
     if (organization) {
-        res.status(201).json({
+        return res.status(200).json({
             _id: organization.id,
             companyName: organization.companyName,
             GSTIN: companyName.GSTIN,
             token: generateToken(organization._id)
         });
     } else {
-        res.status(400);
-        throw new Error("Invalid Organization Data")
+        return res.status(201).json({ error: "Invalid Organization Data" });
     }
 })
 

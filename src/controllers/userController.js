@@ -10,6 +10,8 @@ const generateToken = (id) => {
 
 // Register USER
 const registerUser = asyncHanlder(async (req, res) => {
+
+  console.log(req.body)
   const {
     firstName,
     lastName,
@@ -34,20 +36,18 @@ const registerUser = asyncHanlder(async (req, res) => {
     !lastName ||
     !country ||
     !city ||
-    !gender ||
+    // !gender ||
     !email ||
     !password ||
     !yearsOfExperience
   ) {
-    res.status(400);
-    throw new Error("Please fill all required fields");
+    return res.status(201).json({ error: "Fil all the required Fields" });
   }
 
   // Check if user exists
   const userExists = await Freelancer.findOne({ email });
   if (userExists) {
-    res.status(400);
-    throw new Error("User already exists");
+    return res.status(201).json({ error: "User email Already Exist" });
   }
 
   // Create hash password
@@ -74,7 +74,7 @@ const registerUser = asyncHanlder(async (req, res) => {
   });
 
   if (user) {
-    res.status(201).json({
+   return res.status(200).json({
       _id: user.id,
       firstName: user.firstName,
       lastName: user.lastName,
@@ -82,8 +82,7 @@ const registerUser = asyncHanlder(async (req, res) => {
       token: generateToken(user._id),
     });
   } else {
-    res.status(400);
-    throw new Error("Invalid user data");
+    return res.status(201).json({ error: "Something went wrong, Please Try again" });
   }
 });
 
@@ -92,23 +91,21 @@ const loginUser = asyncHanlder(async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    res.status(400);
-    throw new Error('Please fill all fields')
+    return res.status(201).json({error:"You are not registered"});
   }
 
   // Check for the user email
   const user = await Freelancer.findOne({ email });
 
   if (user && (await bcrypt.compare(password, user.password))) {
-    res.json({
+   return res.status(201).json({
       _id: user.id,
       name: `${user.firstName} ${user.lastName}`,
       email: user.email,
       token: generateToken(user._id)
     });
   } else {
-    res.status(400);
-    throw new Error('Invalid Credentials')
+   return res.status(201).json({});
   }
 })
 
@@ -116,9 +113,9 @@ const loginUser = asyncHanlder(async (req, res) => {
 const getUsers = asyncHanlder(async (req, res) => {
   try {
     const freelancers = await Freelancer.find();
-    res.json(freelancers);
+    return res.status(200).json(freelancers);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return res.status(201).json({ error: "Something went wrong, Please Try again" });
   }
 
 })

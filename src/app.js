@@ -6,10 +6,16 @@ const dotenv = require('dotenv').config()
 const port = process.env.PORT || 3000;
 const FreelancerRoutes = require("./routes/freelancerRoutes");
 const OrganizationRoutes = require('./routes/organizationRoutes')
-require("./db/conn");
+const AdminRoutes = require('./routes/admin')
 
+const connectDB = require('./db/conn');
 
-app.use(cors());
+connectDB()
+
+app.use(cors({
+  origin:'*',
+  credentials:false
+}));
 app.use(express.json())
 
 app.get("/", (req, res) => {
@@ -21,6 +27,10 @@ app.use("/api/freelancer", FreelancerRoutes);
 
 // Organizations 
 app.use('/api/organization', OrganizationRoutes)
+
+
+// Organizations 
+app.use('/api/admin', AdminRoutes)
 
 app.listen(port, () => {
   console.log(`${port} : App is running... `);

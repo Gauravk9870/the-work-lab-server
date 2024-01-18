@@ -20,7 +20,7 @@ const freelancerSchema = new mongoose.Schema({
   },
   gender: {
     type: String,
-    enum: ["male", "female", "others"],
+    // enum: ["male", "female", "others"],
   },
   email: {
     type: String,

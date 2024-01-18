@@ -8,7 +8,7 @@ const OrganizationSchema = new mongoose.Schema({
   password: String,
   tradeName: String,
   GSTIN: String,
-  yearOfIncorporation: Number,
+  yearOfIncorporation: String,
   relationshipToCompany: String,
   contactPersonPhoneNumber: {
     type: String,
@@ -33,7 +33,7 @@ const OrganizationSchema = new mongoose.Schema({
   numberOfEmployees: Number,
   typeOfCompany: {
     type: String,
-    enum: ["Sole", "LLP", "Private", "Public"],
+    // enum: ["Sole", "LLP", "Private", "Public"],
   },
   companyDirectorEmail: String,
   companyDirectorPhoneNumber: String,
