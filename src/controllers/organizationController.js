@@ -16,16 +16,16 @@ const registerOrganization = asyncHanlder(async (req, res) => {
         GSTIN,
         yearOfIncorporation,
         relationshipToCompany,
-        contactPerson,
+        contactPersonPhoneNumber,
         contactPersonEmail,
         numberOfEmployees,
         typeOfCompany,
-        emailDirector,
-        phoneNumberDirector,
+        companyDirectorEmail,
+        companyDirectorPhoneNumber,
         industry,
         sector,
-        website,
-        about,
+        companyWebsite,
+        aboutCompany,
         annualTurnover,
         servicesToExplore,
     } = req.body;
@@ -49,20 +49,21 @@ const registerOrganization = asyncHanlder(async (req, res) => {
     // Create Organization
     const organization = await Organization.create({
         companyName,
+        password,
         tradeName,
         GSTIN,
         yearOfIncorporation,
         relationshipToCompany,
-        contactPerson,
+        contactPersonPhoneNumber,
         contactPersonEmail,
         numberOfEmployees,
         typeOfCompany,
-        emailDirector,
-        phoneNumberDirector,
+        companyDirectorEmail,
+        companyDirectorPhoneNumber,
         industry,
         sector,
-        website,
-        about,
+        companyWebsite,
+        aboutCompany,
         annualTurnover,
         servicesToExplore,
         password: hashedPassword
@@ -118,6 +119,22 @@ const getOrganizations = asyncHanlder(async (req, res) => {
 
 })
 
+const getOrganizationByGSTIN = asyncHanlder(async (req, res) => {
+    const { gstin } = req.params;
+
+    try {
+        const organization = await Organization.findOne({ GSTIN: gstin });
+
+        if (organization) {
+            return res.status(200).json(organization);
+
+        } else {
+            return res.status(404).json({ error: "organization not found" });
+        }
+    } catch (error) {
+        return res.status(500).json({ error: "Something went wrong, Please try again" });
+    }
+});
 module.exports = {
-    registerOrganization, loginOrganization, getOrganizations
+    registerOrganization, loginOrganization, getOrganizations, getOrganizationByGSTIN
 };

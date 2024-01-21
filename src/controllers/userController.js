@@ -125,16 +125,12 @@ const getUsers = asyncHanlder(async (req, res) => {
 const getUserById = asyncHanlder(async (req, res) => {
   const userId = req.params.id;
 
-  console.log("ID : ", userId);
   try {
     const user = await Freelancer.findById(userId);
 
     if (user) {
-      console.log(user);
       return res.status(200).json(user);
     } else {
-      console.log(user);
-
       return res.status(404).json({ error: "User not found" });
     }
   } catch (error) {

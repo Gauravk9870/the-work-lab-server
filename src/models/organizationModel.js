@@ -42,7 +42,7 @@ const OrganizationSchema = new mongoose.Schema({
   companyWebsite: String,
   aboutCompany: String,
   annualTurnover: Number,
-  servicesToExplore: [String],
+  servicesToExplore: String,
   termsAndConditionsAgreement: {
     type: Boolean,
   },
