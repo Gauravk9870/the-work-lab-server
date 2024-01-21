@@ -55,7 +55,7 @@ const freelancerSchema = new mongoose.Schema({
     ],
     required: [true, "Experience is required"],
   },
-  expertise: { type: [String], default: [] },
+  expertise: { type: String },
   interestedProducts: [{ type: String }],
   freelancerInterest: { type: String },
   remoteWorkSuccessKey: { type: String },
