@@ -39,7 +39,8 @@ const registerUser = asyncHanlder(async (req, res) => {
     // !gender ||
     !email ||
     !password ||
-    !yearsOfExperience
+    !yearsOfExperience ||
+    !dateOfBirth
   ) {
     return res.status(201).json({ error: "Fil all the required Fields" });
   }
@@ -59,6 +60,7 @@ const registerUser = asyncHanlder(async (req, res) => {
     firstName,
     lastName,
     profileImg,
+    dateOfBirth,
     country,
     city,
     gender,
